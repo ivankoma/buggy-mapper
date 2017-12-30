@@ -1,0 +1,12 @@
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.MainForm.resources
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.Properties.Resources.resources
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlConnect.resources
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.csproj.GenerateResource.Cache
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\bin\Debug\BuggyApp.exe.config
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\bin\Debug\BuggyApp.exe
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\bin\Debug\BuggyApp.pdb
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\bin\Debug\SimpleWifi.dll
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.exe
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.pdb
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlHome.resources
+C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.csprojResolveAssemblyReference.cache
