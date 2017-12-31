@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 
-namespace BuggyApp
+namespace BuggyMapper
 {
     public partial class MainForm : Form
     {
@@ -23,6 +23,10 @@ namespace BuggyApp
             
             InitializeComponent();
             userControlHome1.BringToFront();
+
+            userControlHome1.Location = new Point(210, 28);
+            userControlConnect1.Location = new Point(210, 28);
+            userControlControls1.Location = new Point(210, 28);
            
         }
 
@@ -36,7 +40,6 @@ namespace BuggyApp
             SidePanel.Height = btnHome.Height;
             SidePanel.Top = btnHome.Top;
             userControlHome1.BringToFront();
-          
         }
 
 
@@ -45,20 +48,21 @@ namespace BuggyApp
             SidePanel.Height = btnConnect.Height;
             SidePanel.Top = btnConnect.Top;
             userControlConnect1.BringToFront();
-
-
         }
 
         private void btnControls_Click(object sender, EventArgs e)
         {
             SidePanel.Height = btnControls.Height;
             SidePanel.Top = btnControls.Top;
+            userControlControls1.BringToFront();
         }
 
         private void btnInfo_Click(object sender, EventArgs e)
         {
             SidePanel.Height = btnInfo.Height;
             SidePanel.Top = btnInfo.Top;
+            userControlInfo1.BringToFront();
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -68,7 +72,11 @@ namespace BuggyApp
 
         private void userControlConnect1_Load(object sender, EventArgs e)
         {
-            
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

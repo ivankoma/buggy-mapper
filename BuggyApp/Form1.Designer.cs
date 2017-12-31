@@ -1,4 +1,4 @@
-﻿namespace BuggyApp
+﻿namespace BuggyMapper
 {
     partial class MainForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.btnInfo = new System.Windows.Forms.Button();
@@ -38,8 +39,10 @@
             this.btnBattery = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.userControlConnect1 = new BuggyApp.UserControlConnect();
-            this.userControlHome1 = new BuggyApp.UserControlHome();
+            this.userControlHome1 = new BuggyMapper.UserControlHome();
+            this.userControlConnect1 = new BuggyMapper.UserControlConnect();
+            this.userControlControls1 = new BuggyMapper.UserControlControls();
+            this.userControlInfo1 = new BuggyMapper.UserControlInfo();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -71,9 +74,9 @@
             this.btnInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
             this.btnInfo.FlatAppearance.BorderSize = 0;
             this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInfo.Font = new System.Drawing.Font("Century Gothic", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInfo.ForeColor = System.Drawing.Color.White;
-            this.btnInfo.Image = global::BuggyApp.Properties.Resources.info_icon_24;
+            this.btnInfo.Image = global::BuggyApp.Properties.Resources.info_icon_32;
             this.btnInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInfo.Location = new System.Drawing.Point(12, 333);
             this.btnInfo.Name = "btnInfo";
@@ -88,9 +91,9 @@
             this.btnControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
             this.btnControls.FlatAppearance.BorderSize = 0;
             this.btnControls.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnControls.Font = new System.Drawing.Font("Century Gothic", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnControls.ForeColor = System.Drawing.Color.White;
-            this.btnControls.Image = global::BuggyApp.Properties.Resources.track_icon_24;
+            this.btnControls.Image = ((System.Drawing.Image)(resources.GetObject("btnControls.Image")));
             this.btnControls.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnControls.Location = new System.Drawing.Point(12, 278);
             this.btnControls.Name = "btnControls";
@@ -105,9 +108,9 @@
             this.btnConnect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
             this.btnConnect.FlatAppearance.BorderSize = 0;
             this.btnConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConnect.Font = new System.Drawing.Font("Century Gothic", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConnect.ForeColor = System.Drawing.Color.White;
-            this.btnConnect.Image = global::BuggyApp.Properties.Resources.wireless_signal_icon_24;
+            this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
             this.btnConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnConnect.Location = new System.Drawing.Point(12, 216);
             this.btnConnect.Name = "btnConnect";
@@ -122,9 +125,9 @@
             this.btnHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
             this.btnHome.FlatAppearance.BorderSize = 0;
             this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Font = new System.Drawing.Font("Century Gothic", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHome.ForeColor = System.Drawing.Color.White;
-            this.btnHome.Image = global::BuggyApp.Properties.Resources._3x3_grid_icon_24;
+            this.btnHome.Image = ((System.Drawing.Image)(resources.GetObject("btnHome.Image")));
             this.btnHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnHome.Location = new System.Drawing.Point(12, 143);
             this.btnHome.Name = "btnHome";
@@ -144,13 +147,13 @@
             this.panel2.Location = new System.Drawing.Point(210, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(810, 28);
-            this.panel2.TabIndex = 1;
+            this.panel2.TabIndex = 7;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // btnBattery
             // 
             this.btnBattery.FlatAppearance.BorderSize = 0;
             this.btnBattery.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBattery.Image = global::BuggyApp.Properties.Resources.battery_icon_16;
             this.btnBattery.Location = new System.Drawing.Point(705, 3);
             this.btnBattery.Name = "btnBattery";
             this.btnBattery.Size = new System.Drawing.Size(20, 20);
@@ -161,7 +164,6 @@
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Image = global::BuggyApp.Properties.Resources.cog_icon_16___Copy;
             this.btnSettings.Location = new System.Drawing.Point(737, 3);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(20, 20);
@@ -173,42 +175,55 @@
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Image = global::BuggyApp.Properties.Resources.on_off_icon_16;
             this.btnExit.Location = new System.Drawing.Point(772, 3);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(20, 20);
             this.btnExit.TabIndex = 2;
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // userControlConnect1
-            // 
-            this.userControlConnect1.Location = new System.Drawing.Point(213, 58);
-            this.userControlConnect1.Name = "userControlConnect1";
-            this.userControlConnect1.Size = new System.Drawing.Size(810, 550);
-            this.userControlConnect1.TabIndex = 3;
-            this.userControlConnect1.Load += new System.EventHandler(this.userControlConnect1_Load);
             // 
             // userControlHome1
             // 
-            this.userControlHome1.Location = new System.Drawing.Point(226, 58);
+            this.userControlHome1.Location = new System.Drawing.Point(210, 26);
             this.userControlHome1.Name = "userControlHome1";
             this.userControlHome1.Size = new System.Drawing.Size(810, 554);
-            this.userControlHome1.TabIndex = 2;
+            this.userControlHome1.TabIndex = 11;
+            // 
+            // userControlConnect1
+            // 
+            this.userControlConnect1.Location = new System.Drawing.Point(210, 26);
+            this.userControlConnect1.Name = "userControlConnect1";
+            this.userControlConnect1.Size = new System.Drawing.Size(810, 554);
+            this.userControlConnect1.TabIndex = 10;
+            // 
+            // userControlControls1
+            // 
+            this.userControlControls1.Location = new System.Drawing.Point(210, 26);
+            this.userControlControls1.Name = "userControlControls1";
+            this.userControlControls1.Size = new System.Drawing.Size(810, 554);
+            this.userControlControls1.TabIndex = 9;
+            // 
+            // userControlInfo1
+            // 
+            this.userControlInfo1.Location = new System.Drawing.Point(210, 29);
+            this.userControlInfo1.Name = "userControlInfo1";
+            this.userControlInfo1.Size = new System.Drawing.Size(810, 554);
+            this.userControlInfo1.TabIndex = 8;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 580);
-            this.Controls.Add(this.userControlConnect1);
             this.Controls.Add(this.userControlHome1);
+            this.Controls.Add(this.userControlConnect1);
+            this.Controls.Add(this.userControlControls1);
+            this.Controls.Add(this.userControlInfo1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Buggy Mapper";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -219,17 +234,20 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnInfo;
-        private System.Windows.Forms.Button btnControls;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnHome;
-        private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button btnSettings;
-        private System.Windows.Forms.Button btnBattery;
         private System.Windows.Forms.Panel SidePanel;
-        private UserControlHome userControlHome1;
+
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnBattery;
+        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnControls;
+        private UserControlInfo userControlInfo1;
+        private UserControlControls userControlControls1;
         private UserControlConnect userControlConnect1;
+        private UserControlHome userControlHome1;
     }
 }
 

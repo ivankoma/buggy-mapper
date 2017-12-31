@@ -10,3 +10,26 @@ C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\Bug
 C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.pdb
 C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlHome.resources
 C:\Users\N\Documents\Visual Studio 2015\Projects\BuggyApp\BuggyApp\obj\Debug\BuggyApp.csprojResolveAssemblyReference.cache
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\bin\Debug\BuggyApp.exe.config
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.exe
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.pdb
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\bin\Debug\BuggyApp.exe
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\bin\Debug\BuggyApp.pdb
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\bin\Debug\SimpleWifi.dll
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.csprojResolveAssemblyReference.cache
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.MainForm.resources
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.Properties.Resources.resources
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlConnect.resources
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlHome.resources
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.csproj.GenerateResource.Cache
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlControls.resources
+C:\Users\Josanac\Desktop\BuggyApp\BuggyApp\obj\Debug\BuggyApp.UserControlInfo.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.csprojResolveAssemblyReference.cache
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.MainForm.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.Properties.Resources.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.UserControlConnect.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.UserControlControls.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.UserControlHome.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.UserControlInfo.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.csproj.GenerateResource.Cache
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.csproj.CoreCompileInputs.cache
