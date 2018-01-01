@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnControls = new System.Windows.Forms.Button();
@@ -45,14 +44,12 @@
             this.userControlControls1 = new BuggyMapper.UserControlControls();
             this.userControlInfo1 = new BuggyMapper.UserControlInfo();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.SidePanel);
             this.panel1.Controls.Add(this.btnInfo);
             this.panel1.Controls.Add(this.btnControls);
@@ -63,16 +60,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(210, 580);
             this.panel1.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(52, 22);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
             // 
             // SidePanel
             // 
@@ -95,7 +82,7 @@
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(195, 56);
             this.btnInfo.TabIndex = 3;
-            this.btnInfo.Text = "Demo";
+            this.btnInfo.Text = "Info";
             this.btnInfo.UseVisualStyleBackColor = false;
             this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
             // 
@@ -239,7 +226,6 @@
             this.Text = "Buggy Mapper";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -262,7 +248,6 @@
         private UserControlControls userControlControls1;
         private UserControlConnect userControlConnect1;
         private UserControlHome userControlHome1;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
