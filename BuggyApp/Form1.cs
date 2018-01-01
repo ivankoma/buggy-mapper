@@ -62,7 +62,6 @@ namespace BuggyMapper
             SidePanel.Height = btnInfo.Height;
             SidePanel.Top = btnInfo.Top;
             userControlInfo1.BringToFront();
-
         }
 
         private void MainForm_Load(object sender, EventArgs e)
