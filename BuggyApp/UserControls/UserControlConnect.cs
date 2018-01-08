@@ -179,6 +179,7 @@ namespace BuggyMapper
             int testIp = 1;
             while (!foundBuggy)
             {
+                Thread.Sleep(100);
                 new Thread(() =>
                 {
                     testIp++;

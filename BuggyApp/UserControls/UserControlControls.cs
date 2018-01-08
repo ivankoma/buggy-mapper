@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using BuggyApp.Class;
+using Newtonsoft.Json;
 
 namespace BuggyMapper
 {
@@ -36,6 +38,7 @@ namespace BuggyMapper
 
         void go(String where)
         {
+            /*
             if (buggyDirection == 0)
                 distanceColor = Color.Red;
             if (buggyDirection == 1)
@@ -44,6 +47,7 @@ namespace BuggyMapper
                 distanceColor = Color.Blue;
             if (buggyDirection == 3)
                 distanceColor = Color.Black;
+            */
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -70,7 +74,7 @@ namespace BuggyMapper
         }
 
         bool readingFromBuggy = false;
-        private Color distanceColor = Color.Red;
+        private Color distanceColor = Color.Black;
 
         private void checkBoxReadFromBuggy_CheckStateChanged(object sender, EventArgs e)
         {
@@ -100,7 +104,6 @@ namespace BuggyMapper
                     String response = "-1";
                     try
                     {
-                        //response = wb.DownloadString(UserControlConnect.nodemcuIP + "/read/rf"); //temp
                         response = wb.DownloadString(UserControlConnect.nodemcuIP + "/get");
 
                         if (this.textBoxReadFromBuggy.InvokeRequired)
@@ -121,34 +124,67 @@ namespace BuggyMapper
                     catch (Exception e) {
                         //MessageBox.Show("Can't read from buggy");
                     };
-                    Thread.Sleep(250);
+                    Thread.Sleep(500);
                 }
             }
+        }
+
+        int returnValue(String response, String direction)
+        {
+            String temp = response.Substring(response.IndexOf(direction) + direction.Length + 1, 6);
+            if(temp.Contains(" "))
+            {
+                temp = temp.Substring(0, temp.IndexOf(" "));
+            }
+            return Convert.ToInt32(Convert.ToDouble(temp));
+        }
+
+        int returnMeasurementError(double value)
+        {
+            int measurementError = Convert.ToInt32(Math.Tan(7.5 * Math.PI / 180.0) * value); //15 degrees is sensor's error
+            measurementError *= 10; //just so it can be seen better
+            return measurementError;
         }
 
         private void parseBuggyResponse(string response)
         {
             String value = "";
-            if (response.Contains("=")){
-                value = response.Substring(response.IndexOf("=") + 1, 5);
-                if (!value.Contains("INF"))
+            int measurementError;
+            if (!value.Contains("INF"))
+            {
+                using (Graphics gfx = Graphics.FromImage(map))
+                    gfx.Clear(Color.White);
+
+                int from = response.IndexOf("{");
+                int to = response.IndexOf("}");
+                response = response.Substring(from, to - from + 1);
+                Response r = JsonConvert.DeserializeObject<Response>(response);
+                
+                measurementError = returnMeasurementError(r.sensorForward);
+                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
                 {
-                    int valueInt = Convert.ToInt32(Convert.ToDouble(value));
-                    int measurementError = Convert.ToInt32(Math.Tan(7.5 * Math.PI / 180.0) * valueInt); //15 degrees is sensor error
-
-                    for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
-                    {
-                        map.SetPixel(Config.mapCenterX + i, Config.mapCenterY + valueInt - 1, distanceColor);
-                        map.SetPixel(Config.mapCenterX + i, Config.mapCenterY + valueInt, distanceColor);
-                        map.SetPixel(Config.mapCenterX + i, Config.mapCenterY + valueInt + 1, distanceColor);
-
-                    }
-
-                    ///Thread t = new Thread(() => addBitmapToPictureBox(pictureBoxMap, map));
-                    //t.Start();
-
-                    pictureBoxMap.Image = map; //TODO: fix this
+                    map.SetPixel(Config.mapCenterX + i, Config.mapCenterY - Convert.ToInt32(r.sensorForward), distanceColor);
                 }
+
+                
+                measurementError = returnMeasurementError(r.sensorLeft);
+                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                {
+                    map.SetPixel(Config.mapCenterX - Convert.ToInt32(r.sensorLeft), Config.mapCenterY + i, distanceColor);
+                }
+
+
+                measurementError = returnMeasurementError(r.sensorRight);
+                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                {
+                    map.SetPixel(Config.mapCenterX + Convert.ToInt32(r.sensorRight), Config.mapCenterY + i, distanceColor);
+                }
+
+                
+                ///Thread t = new Thread(() => addBitmapToPictureBox(pictureBoxMap, map));
+                //t.Start();
+
+                pictureBoxMap.Image = map; //TODO: fix this
             }
         }
 
@@ -183,7 +219,6 @@ namespace BuggyMapper
             {
                 buggyDirection = 0;
             }
-            Console.WriteLine(buggyDirection);
         }
 
         private void buttonGoLeft_Click(object sender, EventArgs e)
@@ -200,7 +235,6 @@ namespace BuggyMapper
             {
                 buggyDirection = 3;
             }
-            Console.WriteLine(buggyDirection);
         }
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonReadFront_Click(object sender, EventArgs e)
@@ -293,6 +327,54 @@ namespace BuggyMapper
             {
                 Console.WriteLine("Bitmap could not be resized");
                 return imgToResize;
+            }
+        }
+
+        private void UserControlControls_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("key down " + e.KeyCode);
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    go("f");
+                    break;
+                case Keys.Down:
+                    go("s");
+                    break;
+                case Keys.Left:
+                    go("l");
+                    break;
+                case Keys.Right:
+                    go("r");
+                    break;
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if ((keyData == Keys.Right) || (keyData == Keys.Left) ||
+                (keyData == Keys.Up) || (keyData == Keys.Down))
+            {
+                switch (keyData)
+                {
+                    case Keys.Up:
+                        go("f");
+                        break;
+                    case Keys.Down:
+                        go("s");
+                        break;
+                    case Keys.Left:
+                        go("l");
+                        break;
+                    case Keys.Right:
+                        go("r");
+                        break;
+                }
+                return true;
+            }
+            else
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
             }
         }
     }

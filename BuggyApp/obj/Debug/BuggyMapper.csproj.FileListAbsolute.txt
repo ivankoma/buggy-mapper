@@ -12,3 +12,6 @@ C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.csproj.G
 C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.csproj.CoreCompileInputs.cache
 C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.exe
 C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.pdb
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.csprojResolveAssemblyReference.cache
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\Newtonsoft.Json.xml

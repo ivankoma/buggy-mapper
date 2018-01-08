@@ -12,6 +12,6 @@ namespace BuggyMapper
         public static int mapSizeHeight = 401;
 
         public static int mapCenterX = 201;
-        public static int mapCenterY = 0;
+        public static int mapCenterY = 201;
     }
 }
