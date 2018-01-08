@@ -1,0 +1,14 @@
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\BuggyApp.exe.config
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\BuggyApp.exe
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\BuggyApp.pdb
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\bin\Debug\SimpleWifi.dll
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.MainForm.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.Properties.Resources.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.UserControlConnect.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.UserControlControls.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.UserControlHome.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.UserControlInfo.resources
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.csproj.GenerateResource.Cache
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyMapper.csproj.CoreCompileInputs.cache
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.exe
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.pdb

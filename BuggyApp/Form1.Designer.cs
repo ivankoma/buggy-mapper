@@ -82,7 +82,7 @@
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(195, 56);
             this.btnInfo.TabIndex = 3;
-            this.btnInfo.Text = "Info";
+            this.btnInfo.Text = "Demo";
             this.btnInfo.UseVisualStyleBackColor = false;
             this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
             // 

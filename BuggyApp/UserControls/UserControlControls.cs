@@ -159,17 +159,20 @@ namespace BuggyMapper
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonGoForward_Click(object sender, EventArgs e)
         {
-            go("f");
+            Thread t = new Thread(() => go("f"));
+            t.Start();
         }
 
         private void buttonGoStop_Click(object sender, EventArgs e)
         {
-            go("s");
+            Thread t = new Thread(() => go("s"));
+            t.Start();
         }
 
         private void buttonGoRight_Click(object sender, EventArgs e)
         {
-            go("r");
+            Thread t = new Thread(() => go("r"));
+            t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
             pictureBoxDirection.Image.RotateFlip(RotateFlipType.Rotate270FlipXY);
@@ -185,7 +188,8 @@ namespace BuggyMapper
 
         private void buttonGoLeft_Click(object sender, EventArgs e)
         {
-            go("l");
+            Thread t = new Thread(() => go("l"));
+            t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
             pictureBoxDirection.Image.RotateFlip(RotateFlipType.Rotate90FlipXY);
@@ -201,19 +205,19 @@ namespace BuggyMapper
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonReadFront_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/rf"));
+            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/f"));
             frontThread.Start();
         }
 
         private void buttonReadLeft_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/rl"));
+            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/l"));
             frontThread.Start();
         }
 
         private void buttonReadRight_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/rr"));
+            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/r"));
             frontThread.Start();
         }
 
