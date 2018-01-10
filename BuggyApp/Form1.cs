@@ -12,12 +12,12 @@ using SimpleWifi.Win32;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using BuggyApp.Class;
 
 namespace BuggyMapper
 {
     public partial class MainForm : Form
     {
-        
         public MainForm()
         {
             

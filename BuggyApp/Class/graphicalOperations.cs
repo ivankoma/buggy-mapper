@@ -32,7 +32,7 @@ namespace BuggyApp.Class
 
         static public void AddBitmapToPictureBox(PictureBox pb, Bitmap bitmap, int upscaleFactor)
         {
-            Size newSize = new Size(bitmap.Size.Width * upscaleFactor, bitmap.Size.Width * upscaleFactor);
+            Size newSize = new Size(bitmap.Size.Width * upscaleFactor, bitmap.Size.Height * upscaleFactor);
 
             if (pb.Image != null)
             {

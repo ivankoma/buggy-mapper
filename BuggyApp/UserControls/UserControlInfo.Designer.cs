@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxMap = new System.Windows.Forms.PictureBox();
             this.buttonSetBuggyLocation = new System.Windows.Forms.Button();
             this.textBoxBuggyLocationY = new System.Windows.Forms.TextBox();
             this.textBoxBuggyLocationX = new System.Windows.Forms.TextBox();
@@ -38,17 +37,10 @@
             this.buttonReadBottomSensor = new System.Windows.Forms.Button();
             this.buttonReadTopSensor = new System.Windows.Forms.Button();
             this.textBoxLog = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).BeginInit();
+            this.pictureBoxMap = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBoxMap
-            // 
-            this.pictureBoxMap.Location = new System.Drawing.Point(192, 0);
-            this.pictureBoxMap.Name = "pictureBoxMap";
-            this.pictureBoxMap.Size = new System.Drawing.Size(100, 50);
-            this.pictureBoxMap.TabIndex = 0;
-            this.pictureBoxMap.TabStop = false;
             // 
             // buttonSetBuggyLocation
             // 
@@ -90,7 +82,6 @@
             // 
             // buttonReadRightSensor
             // 
-            this.buttonReadRightSensor.Enabled = false;
             this.buttonReadRightSensor.Location = new System.Drawing.Point(3, 87);
             this.buttonReadRightSensor.Name = "buttonReadRightSensor";
             this.buttonReadRightSensor.Size = new System.Drawing.Size(105, 23);
@@ -101,7 +92,6 @@
             // 
             // buttonReadLeftSensor
             // 
-            this.buttonReadLeftSensor.Enabled = false;
             this.buttonReadLeftSensor.Location = new System.Drawing.Point(3, 145);
             this.buttonReadLeftSensor.Name = "buttonReadLeftSensor";
             this.buttonReadLeftSensor.Size = new System.Drawing.Size(105, 23);
@@ -112,7 +102,6 @@
             // 
             // buttonReadBottomSensor
             // 
-            this.buttonReadBottomSensor.Enabled = false;
             this.buttonReadBottomSensor.Location = new System.Drawing.Point(3, 116);
             this.buttonReadBottomSensor.Name = "buttonReadBottomSensor";
             this.buttonReadBottomSensor.Size = new System.Drawing.Size(105, 23);
@@ -123,7 +112,6 @@
             // 
             // buttonReadTopSensor
             // 
-            this.buttonReadTopSensor.Enabled = false;
             this.buttonReadTopSensor.Location = new System.Drawing.Point(3, 58);
             this.buttonReadTopSensor.Name = "buttonReadTopSensor";
             this.buttonReadTopSensor.Size = new System.Drawing.Size(105, 23);
@@ -141,6 +129,15 @@
             this.textBoxLog.Size = new System.Drawing.Size(180, 353);
             this.textBoxLog.TabIndex = 5;
             // 
+            // pictureBoxMap
+            // 
+            this.pictureBoxMap.Location = new System.Drawing.Point(192, 0);
+            this.pictureBoxMap.Name = "pictureBoxMap";
+            this.pictureBoxMap.Size = new System.Drawing.Size(100, 50);
+            this.pictureBoxMap.TabIndex = 0;
+            this.pictureBoxMap.TabStop = false;
+            this.pictureBoxMap.Click += new System.EventHandler(this.pictureBoxMap_Click);
+            // 
             // UserControlInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,9 +149,9 @@
             this.Size = new System.Drawing.Size(810, 554);
             this.Load += new System.EventHandler(this.UserControlInfo_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.UserControlInfo_Paint);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

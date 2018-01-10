@@ -57,7 +57,7 @@
     <Compile Include="Class\ClassWifi.cs" />
     <Compile Include="Class\graphicalOperations.cs" />
     <Compile Include="Class\Response.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="Class\Config.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

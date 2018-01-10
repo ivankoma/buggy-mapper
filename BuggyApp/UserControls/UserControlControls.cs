@@ -12,12 +12,14 @@ using System.Net;
 using System.Threading;
 using BuggyApp.Class;
 using Newtonsoft.Json;
+using static System.Windows.Forms.DataFormats;
 
 namespace BuggyMapper
 {
     public partial class UserControlControls : UserControl
     {
-        static public Bitmap map;
+        public static Response r;
+        public static Bitmap distanceMap;
 
         Thread readFromBuggyThread;
         int buggyDirection = 0; //0- up, 1-right, 2-down, 3-left
@@ -29,15 +31,16 @@ namespace BuggyMapper
 
         private void UserControlControls_Load(object sender, EventArgs e)
         {
-            map = new Bitmap(Config.mapSizeWidth, Config.mapSizeHeight);
-            using (Graphics gfx = Graphics.FromImage(map))
+            distanceMap = new Bitmap(Config.mapSizeWidth, Config.mapSizeHeight);
+            using (Graphics gfx = Graphics.FromImage(distanceMap))
                 gfx.Clear(Color.White);
 
-            map.SetPixel(Config.mapCenterX, Config.mapCenterY, Color.Green);
+            distanceMap.SetPixel(Config.mapCenterX, Config.mapCenterY, Color.Green);
         }
 
-        void go(String where)
+        public static void go(String where)
         {
+            //Console.WriteLine("Sending to nodemcu:/go/" + where);
             /*
             if (buggyDirection == 0)
                 distanceColor = Color.Red;
@@ -56,17 +59,17 @@ namespace BuggyMapper
             {
                 try
                 {
-                    response = wb.DownloadString(UserControlConnect.nodemcuIP + "/go/" + where);
+                    response = wb.DownloadString(UserControlConnect.nodemcuIP + where);
                 }
                 catch (Exception responseExc)
                 {
-                    MessageBox.Show("I can't connect to Buggy!");
+                    //MessageBox.Show("I can't connect to Buggy!");
                     Console.WriteLine(responseExc.Message);
                     Console.WriteLine(responseExc.Source);
                     Console.WriteLine(responseExc.StackTrace);
                 }
                 sw.Stop();
-                System.Diagnostics.Debug.WriteLine("Going: " + where + " lag:" + sw.ElapsedMilliseconds + "ms");
+                System.Diagnostics.Debug.WriteLine("request: " + where + " lag:" + sw.ElapsedMilliseconds + "ms");
 
             }
             //if (!response.Contains("ok"))
@@ -142,7 +145,7 @@ namespace BuggyMapper
         int returnMeasurementError(double value)
         {
             int measurementError = Convert.ToInt32(Math.Tan(7.5 * Math.PI / 180.0) * value); //15 degrees is sensor's error
-            measurementError *= 10; //just so it can be seen better
+            measurementError *= 1; //just so it can be seen better
             return measurementError;
         }
 
@@ -152,39 +155,39 @@ namespace BuggyMapper
             int measurementError;
             if (!value.Contains("INF"))
             {
-                using (Graphics gfx = Graphics.FromImage(map))
+                using (Graphics gfx = Graphics.FromImage(distanceMap))
                     gfx.Clear(Color.White);
 
                 int from = response.IndexOf("{");
                 int to = response.IndexOf("}");
                 response = response.Substring(from, to - from + 1);
-                Response r = JsonConvert.DeserializeObject<Response>(response);
+                r = JsonConvert.DeserializeObject<Response>(response);
                 
                 measurementError = returnMeasurementError(r.sensorForward);
                 for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
                 {
-                    map.SetPixel(Config.mapCenterX + i, Config.mapCenterY - Convert.ToInt32(r.sensorForward), distanceColor);
+                    distanceMap.SetPixel(Config.mapCenterX + i, Config.mapCenterY - Convert.ToInt32(r.sensorForward), distanceColor);
                 }
 
                 
                 measurementError = returnMeasurementError(r.sensorLeft);
                 for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
                 {
-                    map.SetPixel(Config.mapCenterX - Convert.ToInt32(r.sensorLeft), Config.mapCenterY + i, distanceColor);
+                    distanceMap.SetPixel(Config.mapCenterX - Convert.ToInt32(r.sensorLeft), Config.mapCenterY + i, distanceColor);
                 }
 
 
                 measurementError = returnMeasurementError(r.sensorRight);
                 for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
                 {
-                    map.SetPixel(Config.mapCenterX + Convert.ToInt32(r.sensorRight), Config.mapCenterY + i, distanceColor);
+                    distanceMap.SetPixel(Config.mapCenterX + Convert.ToInt32(r.sensorRight), Config.mapCenterY + i, distanceColor);
                 }
 
                 
                 ///Thread t = new Thread(() => addBitmapToPictureBox(pictureBoxMap, map));
                 //t.Start();
 
-                pictureBoxMap.Image = map; //TODO: fix this
+                pictureBoxMap.Image = distanceMap; //TODO: fix this
             }
         }
 
@@ -195,19 +198,19 @@ namespace BuggyMapper
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonGoForward_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("f"));
+            Thread t = new Thread(() => go("/go/f" + textBoxGoForward.Text));
             t.Start();
         }
 
         private void buttonGoStop_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("s"));
+            Thread t = new Thread(() => go("/go/s"));
             t.Start();
         }
 
         private void buttonGoRight_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("r"));
+            Thread t = new Thread(() => go("/go/r" + textBoxGoRight.Text));
             t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
@@ -223,7 +226,7 @@ namespace BuggyMapper
 
         private void buttonGoLeft_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("l"));
+            Thread t = new Thread(() => go("/go/l" + textBoxGoLeft.Text));
             t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
@@ -239,22 +242,31 @@ namespace BuggyMapper
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonReadFront_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/f"));
-            frontThread.Start();
+            //Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/f"));
+            //frontThread.Start();
+
+            Thread t = new Thread(() => go("/read/f"));
+            t.Start();
         }
 
         private void buttonReadLeft_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/l"));
-            frontThread.Start();
+            //Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/l"));
+            //frontThread.Start();
+
+            Thread t = new Thread(() => go("/read/l"));
+            t.Start();
         }
 
         private void buttonReadRight_Click(object sender, EventArgs e)
         {
-            Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/r"));
-            frontThread.Start();
-        }
+            //Thread frontThread = new Thread(() => readFromWeb(UserControlConnect.nodemcuIP + "/read/r"));
+            //frontThread.Start();
 
+            Thread t = new Thread(() => go("/read/r"));
+            t.Start();
+        }
+        /*
         private void readFromWeb(String url)
         {
             using (var wb = new WebClient())
@@ -269,6 +281,7 @@ namespace BuggyMapper
                 }
             }
         }
+        */
 
         static public void addBitmapToPictureBox(PictureBox pb, Bitmap bitmap)
         {
@@ -331,7 +344,7 @@ namespace BuggyMapper
         }
 
         private void UserControlControls_KeyDown(object sender, KeyEventArgs e)
-        {
+        {/*
             Console.WriteLine("key down " + e.KeyCode);
             switch (e.KeyCode)
             {
@@ -348,6 +361,7 @@ namespace BuggyMapper
                     go("r");
                     break;
             }
+            */
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -358,16 +372,16 @@ namespace BuggyMapper
                 switch (keyData)
                 {
                     case Keys.Up:
-                        go("f");
+                        go("/go/f500");
                         break;
                     case Keys.Down:
-                        go("s");
+                        go("/go/s");
                         break;
                     case Keys.Left:
-                        go("l");
+                        go("/go/l300");
                         break;
                     case Keys.Right:
-                        go("r");
+                        go("/go/r300");
                         break;
                 }
                 return true;
@@ -376,6 +390,31 @@ namespace BuggyMapper
             {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
+        }
+
+        private void buttonGoRightSoft_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(() => go("/go/r" + textBoxGoRightSoft.Text));
+            t.Start();
+        }
+
+        private void buttonGoLeftSoft_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(() => go("/go/l" + textBoxGoLeftSoft.Text));
+            t.Start();
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                Thread t = new Thread(() => go("/go/f550"));
+                t.Start();
+                Thread.Sleep(1500);
+                go("/go/r9");
+                Thread.Sleep(500);
+            }
+
         }
     }
 }

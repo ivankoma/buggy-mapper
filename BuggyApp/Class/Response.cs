@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BuggyApp.Class
 {
-    class Response
+    public class Response
     {
         public double sensorForward;
         public int sensorForwardTimestamp;

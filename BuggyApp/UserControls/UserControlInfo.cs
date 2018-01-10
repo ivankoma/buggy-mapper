@@ -8,21 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BuggyApp.Class;
+using System.Threading;
 
 namespace BuggyMapper
 {
     public partial class UserControlInfo : UserControl
     {
+        
         const string directionUP = "UP";
         const string directionDOWN = "DOWN";
         const string directionLEFT = "LEFT";
         const string directionRIGHT = "RIGHT";
-
+        /*
         int realRobotLocationX, realRobotLocationY;
+
+    */
         List<Point> possibleLocations;
         List<Point> newPossibleLocations;
         Bitmap map;
         private int numberOfMeasurements = 0;
+        private Point realBuggyLocation;
 
         public UserControlInfo()
         {
@@ -39,12 +44,13 @@ namespace BuggyMapper
         private void UserControlInfo_Load(object sender, EventArgs e)
         {
             map = new System.Drawing.Bitmap("map.png");
-            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 3);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
         }
 
         private void buttonReadTopSensor_Click(object sender, EventArgs e)
-        {
+        {   
             numberOfMeasurements++;
+            /*
             int distance = 0;
             int currentX = realRobotLocationX;
             int currentY = realRobotLocationY;
@@ -57,11 +63,15 @@ namespace BuggyMapper
 
             textBoxLog.Text += "Distance to the top wall:" + distance;
             addPossibleLocations(distance, directionUP);
+            */
+            Console.WriteLine(UserControlControls.r.sensorForward);
+            addPossibleLocations(Convert.ToInt32(UserControlControls.r.sensorForward), directionUP);
         }
 
         private void buttonReadRightSensor_Click(object sender, EventArgs e)
-        {
+        {   
             numberOfMeasurements++;
+            /*
             int distance = 0;
             int currentX = realRobotLocationX;
             int currentY = realRobotLocationY;
@@ -74,10 +84,13 @@ namespace BuggyMapper
 
             textBoxLog.Text += "Distance to the right wall:" + distance;
             addPossibleLocations(distance, directionRIGHT);
+            */
+            Console.WriteLine(UserControlControls.r.sensorRight);
+            addPossibleLocations(Convert.ToInt32(UserControlControls.r.sensorRight), directionRIGHT);
         }
 
         private void buttonReadBottomSensor_Click(object sender, EventArgs e)
-        {
+        {   /*
             numberOfMeasurements++;
             int distance = 0;
             int currentX = realRobotLocationX;
@@ -91,10 +104,11 @@ namespace BuggyMapper
 
             textBoxLog.Text += "Distance to the bottom wall:" + distance;
             addPossibleLocations(distance, directionDOWN);
+            */
         }
 
         private void buttonReadLeftSensor_Click(object sender, EventArgs e)
-        {
+        {   /*
             numberOfMeasurements++;
             int distance = 0;
             int currentX = realRobotLocationX;
@@ -107,10 +121,13 @@ namespace BuggyMapper
             }
             textBoxLog.Text += "Distance to the left wall:" + distance;
             addPossibleLocations(distance, directionLEFT);
+            */
+            Console.WriteLine(UserControlControls.r.sensorLeft);
+            addPossibleLocations(Convert.ToInt32(UserControlControls.r.sensorLeft), directionLEFT);
         }
 
         private void buttonSetBuggyLocation_Click(object sender, EventArgs e)
-        {
+        {   /*
             try
             {
                 map = new System.Drawing.Bitmap("map.png");
@@ -135,6 +152,7 @@ namespace BuggyMapper
             {
                 MessageBox.Show("Use valid x and y values!");
             }
+            */
         }
 
         private void buttonDrawPossibleLocations_Click(object sender, EventArgs e)
@@ -252,7 +270,8 @@ namespace BuggyMapper
                     }
                 }
             }
-
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
+            
             if (newPossibleLocations.Count >= 1)
             {
                 possibleLocations.Clear();
@@ -260,28 +279,50 @@ namespace BuggyMapper
                 newPossibleLocations.Clear();
             }
             Console.WriteLine("Possible locations:");
-            textBoxLog.Text += "\r\nPossible locations:\r\n";
+            //textBoxLog.Text += "\r\nPossible locations:\r\n";
             String log = "";
             foreach (var p in possibleLocations)
             {
                 log += p + "\r\n";
             }
             Console.WriteLine(log);
-            textBoxLog.Text += log;
+            //textBoxLog.Text += log;
 
 
             Console.WriteLine("---------------------------");
             if (possibleLocations.Count == 1)
             {
                 map = new System.Drawing.Bitmap("map.png");
-                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y, Color.FromArgb(255, 0, 255, 0));
-                MessageBox.Show("Found buggy", possibleLocations[0].X.ToString() + "," + possibleLocations[0].Y.ToString());
+                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
+                map.SetPixel(possibleLocations[0].X - 1 , possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
+                map.SetPixel(possibleLocations[0].X + 1, possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
+                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y - 1, Color.FromArgb(255, 0, 0, 0));
+                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y + 1, Color.FromArgb(255, 0, 0, 0));
 
+                MessageBox.Show("Found buggy", possibleLocations[0].X.ToString() + "," + possibleLocations[0].Y.ToString());
+                realBuggyLocation = new Point(possibleLocations[0].X, possibleLocations[0].Y);
                 possibleLocations.Clear();
                 newPossibleLocations.Clear();
                 numberOfMeasurements = 0;
             }
-            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 3);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
+            
+
+        }
+
+        private void pictureBoxMap_Click(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            Point coordinates = me.Location;
+            Console.WriteLine(coordinates);
+
+            /*
+            Thread t = new Thread(() => UserControControls.go("f"));
+            t.Start();
+            Thread.Sleep(550); //temp: hardcoded to go 14cm forward
+            Thread t2 = new Thread(() => go("s"));
+            t2.Start();
+            */
         }
     }
 }
