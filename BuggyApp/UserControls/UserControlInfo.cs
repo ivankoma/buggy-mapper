@@ -25,6 +25,9 @@ namespace BuggyMapper
     */
         List<Point> possibleLocations;
         List<Point> newPossibleLocations;
+        List<Point> possibleLocationsForward;
+        List<Point> possibleLocationsLeft;
+        List<Point> possibleLocationsRight;
         Bitmap map;
         private int numberOfMeasurements = 0;
         private Point realBuggyLocation;
@@ -34,6 +37,10 @@ namespace BuggyMapper
             InitializeComponent();
             possibleLocations = new List<Point>();
             newPossibleLocations = new List<Point>();
+
+            possibleLocationsForward = new List<Point>();
+            possibleLocationsLeft = new List<Point>();
+            possibleLocationsRight = new List<Point>();
         }
 
         private void UserControlInfo_Paint(object sender, PaintEventArgs e)
@@ -44,7 +51,7 @@ namespace BuggyMapper
         private void UserControlInfo_Load(object sender, EventArgs e)
         {
             map = new System.Drawing.Bitmap("map.png");
-            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, Convert.ToInt32(textBoxMapScaleFactor.Text));
         }
 
         private void buttonReadTopSensor_Click(object sender, EventArgs e)
@@ -108,7 +115,9 @@ namespace BuggyMapper
         }
 
         private void buttonReadLeftSensor_Click(object sender, EventArgs e)
-        {   /*
+        {
+            numberOfMeasurements++;
+            /*
             numberOfMeasurements++;
             int distance = 0;
             int currentX = realRobotLocationX;
@@ -254,23 +263,34 @@ namespace BuggyMapper
                                 if (possibleLocations.Contains(new Point(x, y)))
                                 {
                                     newPossibleLocations.Add(new Point(x, y));
-                                    //possibleLocations.Remove(new Point(x, y));
                                 }
                             }
 
                             if (direction == directionUP)
+                            {
                                 map.SetPixel(x, y, Color.Orange);
+                                possibleLocationsForward.Add(new Point(x, y));
+                            }
                             if (direction == directionDOWN)
+                            {
                                 map.SetPixel(x, y, Color.Purple);
+                            }                              
                             if (direction == directionLEFT)
+                            {
                                 map.SetPixel(x, y, Color.Red);
+                                possibleLocationsLeft.Add(new Point(x, y));
+                            }
                             if (direction == directionRIGHT)
+                            {
                                 map.SetPixel(x, y, Color.Pink);
+                                possibleLocationsRight.Add(new Point(x, y));
+                            }
+                                
                         }
                     }
                 }
             }
-            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, Convert.ToInt32(textBoxMapScaleFactor.Text));
             
             if (newPossibleLocations.Count >= 1)
             {
@@ -284,6 +304,10 @@ namespace BuggyMapper
             foreach (var p in possibleLocations)
             {
                 log += p + "\r\n";
+                if (possibleLocations.Count < 5)
+                {
+                    map.SetPixel(p.X, p.Y, Color.Lime);
+                }
             }
             Console.WriteLine(log);
             //textBoxLog.Text += log;
@@ -294,10 +318,6 @@ namespace BuggyMapper
             {
                 map = new System.Drawing.Bitmap("map.png");
                 map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
-                map.SetPixel(possibleLocations[0].X - 1 , possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
-                map.SetPixel(possibleLocations[0].X + 1, possibleLocations[0].Y, Color.FromArgb(255, 0, 0, 0));
-                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y - 1, Color.FromArgb(255, 0, 0, 0));
-                map.SetPixel(possibleLocations[0].X, possibleLocations[0].Y + 1, Color.FromArgb(255, 0, 0, 0));
 
                 MessageBox.Show("Found buggy", possibleLocations[0].X.ToString() + "," + possibleLocations[0].Y.ToString());
                 realBuggyLocation = new Point(possibleLocations[0].X, possibleLocations[0].Y);
@@ -305,24 +325,131 @@ namespace BuggyMapper
                 newPossibleLocations.Clear();
                 numberOfMeasurements = 0;
             }
-            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, 1);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, Convert.ToInt32(textBoxMapScaleFactor.Text));
             
 
+        }
+
+        private List<Point> addMeasurementError(List<Point> list)
+        {
+            List<Point> temp = new List<Point>();
+            foreach(Point p in list)
+            {
+                temp.Add(new Point(p.X - 1, p.Y));
+                temp.Add(new Point(p.X + 1, p.Y));
+                temp.Add(new Point(p.X, p.Y + 1));
+                temp.Add(new Point(p.X, p.Y - 1));
+                /*
+                temp.Add(new Point(p.X - 2, p.Y));
+                temp.Add(new Point(p.X + 2, p.Y));
+                temp.Add(new Point(p.X, p.Y + 2));
+                temp.Add(new Point(p.X, p.Y - 2));
+                */
+            }
+            list.AddRange(temp);
+            return list;
+        }
+
+        private void showOnMap(List<Point> list, Color color)
+        {
+            foreach (Point p in list)
+            {
+                if(testLocation(p.X, p.Y)){
+                    map.SetPixel(p.X, p.Y, color);
+                }
+                   
+            }
         }
 
         private void pictureBoxMap_Click(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
-            Console.WriteLine(coordinates);
+            int mapx = coordinates.X / Convert.ToInt32(textBoxMapScaleFactor.Text);
+            int mapy = coordinates.Y / Convert.ToInt32(textBoxMapScaleFactor.Text);
+            Console.WriteLine(mapx + "," + mapy);
+            map.SetPixel(mapx, mapy, Color.Pink);
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, Convert.ToInt32(textBoxMapScaleFactor.Text));
 
-            /*
-            Thread t = new Thread(() => UserControControls.go("f"));
-            t.Start();
-            Thread.Sleep(550); //temp: hardcoded to go 14cm forward
-            Thread t2 = new Thread(() => go("s"));
-            t2.Start();
-            */
+            if (mapy < realBuggyLocation.Y)
+            {
+                Console.WriteLine("idem gore " + (realBuggyLocation.Y - mapy) + "cm");
+                UserControlControls.go("/go/s");
+                driveUntil(mapy);
+            }
+            else
+            {
+
+            }
+        }
+
+        private static void driveUntil(int mapy)
+        {
+            Task mytask = Task.Run(() =>
+            {
+                Console.WriteLine("~~~~~~~~~~~~ENTERED TASK~~~~~~~~~~~~");
+                while (UserControlControls.r.sensorForward > mapy)
+                {
+                    while (!UserControlControls.go("/read/f")) {
+                        Thread.Sleep(100);
+                    };
+                    Thread.Sleep(1000);
+
+                    if (UserControlControls.go("/go/s") && UserControlControls.go("/go/f300"))
+                    {
+                        Thread.Sleep(1000);
+                    }
+                }
+                Console.WriteLine("~~~~~~~~~~~~EXITED TASK~~~~~~~~~~~~");
+            });
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            map = new System.Drawing.Bitmap("map.png");
+            graphicalOperations.AddBitmapToPictureBox(pictureBoxMap, map, Convert.ToInt32(textBoxMapScaleFactor.Text));
+            possibleLocations.Clear();
+            newPossibleLocations.Clear();
+            numberOfMeasurements = 0;
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            List<Point> supersampled = new List<Point>();
+
+            possibleLocationsForward = addMeasurementError(possibleLocationsForward);
+            showOnMap(possibleLocationsForward, Color.Orange);
+            possibleLocationsLeft = addMeasurementError(possibleLocationsLeft);
+            showOnMap(possibleLocationsLeft, Color.Red);
+            possibleLocationsRight = addMeasurementError(possibleLocationsRight);
+            showOnMap(possibleLocationsRight, Color.Pink);
+
+            possibleLocationsForward.Add(new Point(0, 0));
+            foreach (Point f in possibleLocationsForward)
+            {
+                foreach (Point r in possibleLocationsRight)
+                {
+                    foreach (Point l in possibleLocationsLeft)
+                    {
+                        if(possibleLocationsForward.Contains(l) || possibleLocationsRight.Contains(l))
+                        {
+                            supersampled.Add(l);
+                        }
+
+                        if (possibleLocationsForward.Contains(r) || possibleLocationsLeft.Contains(r))
+                        {
+                            supersampled.Add(r);
+                        }
+
+                        if (possibleLocationsRight.Contains(f) || possibleLocationsLeft.Contains(f))
+                        {
+                            supersampled.Add(f);
+                        }
+                    }
+                }
+            }
+
+            showOnMap(supersampled, Color.Gray);
         }
     }
 }

@@ -21,8 +21,12 @@ namespace BuggyMapper
         public static Response r;
         public static Bitmap distanceMap;
 
-        Thread readFromBuggyThread;
         int buggyDirection = 0; //0- up, 1-right, 2-down, 3-left
+
+        public static bool readingFromBuggy = false;
+        public Thread readFromBuggyThread;
+
+        private Color distanceColor = Color.Black;
 
         public UserControlControls()
         {
@@ -36,10 +40,15 @@ namespace BuggyMapper
                 gfx.Clear(Color.White);
 
             distanceMap.SetPixel(Config.mapCenterX, Config.mapCenterY, Color.Green);
+
+            readingFromBuggy = true;
+            readFromBuggyThread = new Thread(readFromBuggy);
+            readFromBuggyThread.Start();
         }
 
-        public static void go(String where)
+        public static bool go(String where)
         {
+            //Console.WriteLine("go(" + where + ")");
             //Console.WriteLine("Sending to nodemcu:/go/" + where);
             /*
             if (buggyDirection == 0)
@@ -55,11 +64,13 @@ namespace BuggyMapper
             Stopwatch sw = new Stopwatch();
             sw.Start();
             String response = "";
+            bool isDone = false;
             using (var wb = new WebClient())
             {
                 try
                 {
                     response = wb.DownloadString(UserControlConnect.nodemcuIP + where);
+                    isDone = true;
                 }
                 catch (Exception responseExc)
                 {
@@ -72,62 +83,42 @@ namespace BuggyMapper
                 System.Diagnostics.Debug.WriteLine("request: " + where + " lag:" + sw.ElapsedMilliseconds + "ms");
 
             }
-            //if (!response.Contains("ok"))
-                //MessageBox.Show("No answer!");
-        }
-
-        bool readingFromBuggy = false;
-        private Color distanceColor = Color.Black;
-
-        private void checkBoxReadFromBuggy_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (checkBoxReadFromBuggy.Checked)
-            {
-                if (readingFromBuggy == false)
-                {
-                    readingFromBuggy = true;
-                    readFromBuggyThread = new Thread(readFromBuggy);
-                    readFromBuggyThread.Start();
-                }
-            }
-            else
-            {
-                readingFromBuggy = false;
-                textBoxReadFromBuggy.Clear();
-                readFromBuggyThread.Abort();
-            }
+            return isDone;
         }
 
         void readFromBuggy()
         {
-            while (readingFromBuggy)
-            {
-                using (var wb = new WebClient())
+            while (true) {
+                if (readingFromBuggy)
                 {
-                    String response = "-1";
-                    try
+                    using (var wb = new WebClient())
                     {
-                        response = wb.DownloadString(UserControlConnect.nodemcuIP + "/get");
-
-                        if (this.textBoxReadFromBuggy.InvokeRequired)
+                        String response = "-1";
+                        try
                         {
-                            this.textBoxReadFromBuggy.BeginInvoke((MethodInvoker)delegate ()
+                            response = wb.DownloadString(UserControlConnect.nodemcuIP + "/get");
+
+                            if (this.textBoxReadFromBuggy.InvokeRequired)
+                            {
+                                this.textBoxReadFromBuggy.BeginInvoke((MethodInvoker)delegate ()
+                                {
+                                    this.textBoxReadFromBuggy.Text = response;
+                                    parseBuggyResponse(response);
+                                }
+                                );
+                            }
+                            else
                             {
                                 this.textBoxReadFromBuggy.Text = response;
                                 parseBuggyResponse(response);
                             }
-                            );
                         }
-                        else
+                        catch (Exception e)
                         {
-                            this.textBoxReadFromBuggy.Text = response;
-                            parseBuggyResponse(response);
-                        }
+                            //MessageBox.Show("Can't read from buggy");
+                        };
+                        Thread.Sleep(500);
                     }
-                    catch (Exception e) {
-                        //MessageBox.Show("Can't read from buggy");
-                    };
-                    Thread.Sleep(500);
                 }
             }
         }
@@ -151,6 +142,7 @@ namespace BuggyMapper
 
         private void parseBuggyResponse(string response)
         {
+            Console.WriteLine("----------");
             String value = "";
             int measurementError;
             if (!value.Contains("INF"))
@@ -162,25 +154,32 @@ namespace BuggyMapper
                 int to = response.IndexOf("}");
                 response = response.Substring(from, to - from + 1);
                 r = JsonConvert.DeserializeObject<Response>(response);
-                
-                measurementError = returnMeasurementError(r.sensorForward);
-                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
-                {
-                    distanceMap.SetPixel(Config.mapCenterX + i, Config.mapCenterY - Convert.ToInt32(r.sensorForward), distanceColor);
-                }
+                Console.WriteLine("r.sensorForward " + r.sensorForward);
 
-                
-                measurementError = returnMeasurementError(r.sensorLeft);
-                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                try
                 {
-                    distanceMap.SetPixel(Config.mapCenterX - Convert.ToInt32(r.sensorLeft), Config.mapCenterY + i, distanceColor);
-                }
+                    measurementError = returnMeasurementError(r.sensorForward);
+                    for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                    {
+                        distanceMap.SetPixel(Config.mapCenterX + i, Config.mapCenterY - Convert.ToInt32(r.sensorForward), distanceColor);
+                    }
 
 
-                measurementError = returnMeasurementError(r.sensorRight);
-                for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                    measurementError = returnMeasurementError(r.sensorLeft);
+                    for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                    {
+                        distanceMap.SetPixel(Config.mapCenterX - Convert.ToInt32(r.sensorLeft), Config.mapCenterY + i, distanceColor);
+                    }
+
+
+                    measurementError = returnMeasurementError(r.sensorRight);
+                    for (int i = -(measurementError / 2); i < (measurementError / 2); i++)
+                    {
+                        distanceMap.SetPixel(Config.mapCenterX + Convert.ToInt32(r.sensorRight), Config.mapCenterY + i, distanceColor);
+                    }
+                }catch(Exception e)
                 {
-                    distanceMap.SetPixel(Config.mapCenterX + Convert.ToInt32(r.sensorRight), Config.mapCenterY + i, distanceColor);
+
                 }
 
                 
@@ -402,19 +401,6 @@ namespace BuggyMapper
         {
             Thread t = new Thread(() => go("/go/l" + textBoxGoLeftSoft.Text));
             t.Start();
-        }
-
-        private void buttonTest_Click(object sender, EventArgs e)
-        {
-            for(int i = 0; i < 10; i++)
-            {
-                Thread t = new Thread(() => go("/go/f550"));
-                t.Start();
-                Thread.Sleep(1500);
-                go("/go/r9");
-                Thread.Sleep(500);
-            }
-
         }
     }
 }

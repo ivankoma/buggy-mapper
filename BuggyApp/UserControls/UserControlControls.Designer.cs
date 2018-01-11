@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.panelCommands = new System.Windows.Forms.Panel();
+            this.textBoxGoRight = new System.Windows.Forms.TextBox();
+            this.textBoxGoLeft = new System.Windows.Forms.TextBox();
+            this.textBoxGoRightSoft = new System.Windows.Forms.TextBox();
+            this.textBoxGoLeftSoft = new System.Windows.Forms.TextBox();
             this.buttonGoRightSoft = new System.Windows.Forms.Button();
             this.buttonGoLeftSoft = new System.Windows.Forms.Button();
             this.buttonGoLeft = new System.Windows.Forms.Button();
@@ -38,16 +42,10 @@
             this.pictureBoxDirection = new System.Windows.Forms.PictureBox();
             this.panelMap = new System.Windows.Forms.Panel();
             this.textBoxReadFromBuggy = new System.Windows.Forms.TextBox();
-            this.checkBoxReadFromBuggy = new System.Windows.Forms.CheckBox();
             this.buttonReadFront = new System.Windows.Forms.Button();
             this.buttonReadLeft = new System.Windows.Forms.Button();
             this.buttonReadRight = new System.Windows.Forms.Button();
             this.pictureBoxMap = new System.Windows.Forms.PictureBox();
-            this.textBoxGoLeftSoft = new System.Windows.Forms.TextBox();
-            this.textBoxGoRightSoft = new System.Windows.Forms.TextBox();
-            this.textBoxGoLeft = new System.Windows.Forms.TextBox();
-            this.textBoxGoRight = new System.Windows.Forms.TextBox();
-            this.buttonTest = new System.Windows.Forms.Button();
             this.textBoxGoForward = new System.Windows.Forms.TextBox();
             this.panelCommands.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDirection)).BeginInit();
@@ -71,6 +69,42 @@
             this.panelCommands.Name = "panelCommands";
             this.panelCommands.Size = new System.Drawing.Size(237, 198);
             this.panelCommands.TabIndex = 4;
+            // 
+            // textBoxGoRight
+            // 
+            this.textBoxGoRight.Location = new System.Drawing.Point(162, 162);
+            this.textBoxGoRight.Name = "textBoxGoRight";
+            this.textBoxGoRight.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxGoRight.Size = new System.Drawing.Size(34, 20);
+            this.textBoxGoRight.TabIndex = 8;
+            this.textBoxGoRight.Text = "350";
+            // 
+            // textBoxGoLeft
+            // 
+            this.textBoxGoLeft.Location = new System.Drawing.Point(41, 162);
+            this.textBoxGoLeft.Name = "textBoxGoLeft";
+            this.textBoxGoLeft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxGoLeft.Size = new System.Drawing.Size(34, 20);
+            this.textBoxGoLeft.TabIndex = 7;
+            this.textBoxGoLeft.Text = "350";
+            // 
+            // textBoxGoRightSoft
+            // 
+            this.textBoxGoRightSoft.Location = new System.Drawing.Point(162, 81);
+            this.textBoxGoRightSoft.Name = "textBoxGoRightSoft";
+            this.textBoxGoRightSoft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxGoRightSoft.Size = new System.Drawing.Size(34, 20);
+            this.textBoxGoRightSoft.TabIndex = 6;
+            this.textBoxGoRightSoft.Text = "150";
+            // 
+            // textBoxGoLeftSoft
+            // 
+            this.textBoxGoLeftSoft.Location = new System.Drawing.Point(41, 80);
+            this.textBoxGoLeftSoft.Name = "textBoxGoLeftSoft";
+            this.textBoxGoLeftSoft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxGoLeftSoft.Size = new System.Drawing.Size(34, 20);
+            this.textBoxGoLeftSoft.TabIndex = 2;
+            this.textBoxGoLeftSoft.Text = "150";
             // 
             // buttonGoRightSoft
             // 
@@ -144,7 +178,6 @@
             // panelMap
             // 
             this.panelMap.Controls.Add(this.textBoxReadFromBuggy);
-            this.panelMap.Controls.Add(this.checkBoxReadFromBuggy);
             this.panelMap.Location = new System.Drawing.Point(390, 409);
             this.panelMap.Name = "panelMap";
             this.panelMap.Size = new System.Drawing.Size(400, 128);
@@ -159,18 +192,6 @@
             this.textBoxReadFromBuggy.Size = new System.Drawing.Size(394, 99);
             this.textBoxReadFromBuggy.TabIndex = 1;
             // 
-            // checkBoxReadFromBuggy
-            // 
-            this.checkBoxReadFromBuggy.AutoSize = true;
-            this.checkBoxReadFromBuggy.Location = new System.Drawing.Point(3, 3);
-            this.checkBoxReadFromBuggy.Name = "checkBoxReadFromBuggy";
-            this.checkBoxReadFromBuggy.Size = new System.Drawing.Size(107, 17);
-            this.checkBoxReadFromBuggy.TabIndex = 0;
-            this.checkBoxReadFromBuggy.Text = "Read from buggy";
-            this.checkBoxReadFromBuggy.UseVisualStyleBackColor = true;
-            this.checkBoxReadFromBuggy.CheckedChanged += new System.EventHandler(this.checkBoxReadFromBuggy_CheckedChanged);
-            this.checkBoxReadFromBuggy.CheckStateChanged += new System.EventHandler(this.checkBoxReadFromBuggy_CheckStateChanged);
-            // 
             // buttonReadFront
             // 
             this.buttonReadFront.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
@@ -180,7 +201,7 @@
             this.buttonReadFront.Name = "buttonReadFront";
             this.buttonReadFront.Size = new System.Drawing.Size(75, 35);
             this.buttonReadFront.TabIndex = 7;
-            this.buttonReadFront.Text = "Read frontal sensor";
+            this.buttonReadFront.Text = "Read front";
             this.buttonReadFront.UseVisualStyleBackColor = false;
             this.buttonReadFront.Click += new System.EventHandler(this.buttonReadFront_Click);
             // 
@@ -220,52 +241,6 @@
             this.pictureBoxMap.TabStop = false;
             this.pictureBoxMap.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxMap_Paint);
             // 
-            // textBoxGoLeftSoft
-            // 
-            this.textBoxGoLeftSoft.Location = new System.Drawing.Point(41, 80);
-            this.textBoxGoLeftSoft.Name = "textBoxGoLeftSoft";
-            this.textBoxGoLeftSoft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxGoLeftSoft.Size = new System.Drawing.Size(34, 20);
-            this.textBoxGoLeftSoft.TabIndex = 2;
-            this.textBoxGoLeftSoft.Text = "150";
-            // 
-            // textBoxGoRightSoft
-            // 
-            this.textBoxGoRightSoft.Location = new System.Drawing.Point(162, 81);
-            this.textBoxGoRightSoft.Name = "textBoxGoRightSoft";
-            this.textBoxGoRightSoft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxGoRightSoft.Size = new System.Drawing.Size(34, 20);
-            this.textBoxGoRightSoft.TabIndex = 6;
-            this.textBoxGoRightSoft.Text = "150";
-            // 
-            // textBoxGoLeft
-            // 
-            this.textBoxGoLeft.Location = new System.Drawing.Point(41, 162);
-            this.textBoxGoLeft.Name = "textBoxGoLeft";
-            this.textBoxGoLeft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxGoLeft.Size = new System.Drawing.Size(34, 20);
-            this.textBoxGoLeft.TabIndex = 7;
-            this.textBoxGoLeft.Text = "350";
-            // 
-            // textBoxGoRight
-            // 
-            this.textBoxGoRight.Location = new System.Drawing.Point(162, 162);
-            this.textBoxGoRight.Name = "textBoxGoRight";
-            this.textBoxGoRight.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxGoRight.Size = new System.Drawing.Size(34, 20);
-            this.textBoxGoRight.TabIndex = 8;
-            this.textBoxGoRight.Text = "350";
-            // 
-            // buttonTest
-            // 
-            this.buttonTest.Location = new System.Drawing.Point(93, 412);
-            this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(75, 75);
-            this.buttonTest.TabIndex = 9;
-            this.buttonTest.Text = "test";
-            this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
-            // 
             // textBoxGoForward
             // 
             this.textBoxGoForward.Location = new System.Drawing.Point(115, 58);
@@ -280,7 +255,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.textBoxGoForward);
-            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.pictureBoxMap);
             this.Controls.Add(this.buttonReadRight);
             this.Controls.Add(this.buttonReadLeft);
@@ -313,7 +287,6 @@
         private System.Windows.Forms.PictureBox pictureBoxDirection;
         private System.Windows.Forms.Panel panelMap;
         private System.Windows.Forms.TextBox textBoxReadFromBuggy;
-        private System.Windows.Forms.CheckBox checkBoxReadFromBuggy;
         private System.Windows.Forms.Button buttonReadFront;
         private System.Windows.Forms.Button buttonReadLeft;
         private System.Windows.Forms.Button buttonReadRight;
@@ -324,7 +297,6 @@
         private System.Windows.Forms.TextBox textBoxGoRightSoft;
         private System.Windows.Forms.TextBox textBoxGoRight;
         private System.Windows.Forms.TextBox textBoxGoLeft;
-        private System.Windows.Forms.Button buttonTest;
         private System.Windows.Forms.TextBox textBoxGoForward;
     }
 }
