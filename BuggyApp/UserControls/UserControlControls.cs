@@ -27,10 +27,26 @@ namespace BuggyMapper
         public Thread readFromBuggyThread;
 
         private Color distanceColor = Color.Black;
+        private double goingPower;
+        private double goingTime;
+        private double turningPower;
+        private double turningTime;
 
         public UserControlControls()
         {
             InitializeComponent();
+
+            goingPower = trackBarPower.Value / 10.0;
+            goingTime = trackBarTime.Value * 100 ;
+
+            labelPower.Text = "Power\r\n" + goingPower;
+            labelTime.Text = "Time\r\n" + goingTime;
+
+            turningPower = trackBarPowerTurning.Value / 10.0;
+            turningTime = trackBarTimeTurning.Value * 100;
+
+            labelPowerTurning.Text = "Power\r\n" + turningPower;
+            labelTimeTurning.Text = "Time\r\n" + turningTime;
         }
 
         private void UserControlControls_Load(object sender, EventArgs e)
@@ -45,7 +61,7 @@ namespace BuggyMapper
             readFromBuggyThread = new Thread(readFromBuggy);
             readFromBuggyThread.Start();
         }
-
+        
         public static bool go(String where)
         {
             //Console.WriteLine("go(" + where + ")");
@@ -197,7 +213,13 @@ namespace BuggyMapper
         //////////////////////////////////////////////////////////////////////////////////////
         private void buttonGoForward_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("/go/f" + textBoxGoForward.Text));
+            Thread t = new Thread(() => go("/go/f" + goingTime +"," + goingPower));
+            t.Start();
+        }
+
+        private void buttonGoBackward_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(() => go("/go/b" + goingTime + "," + goingPower));
             t.Start();
         }
 
@@ -209,7 +231,7 @@ namespace BuggyMapper
 
         private void buttonGoRight_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("/go/r" + textBoxGoRight.Text));
+            Thread t = new Thread(() => go("/go/r" + turningTime + "," + turningPower));
             t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
@@ -225,7 +247,7 @@ namespace BuggyMapper
 
         private void buttonGoLeft_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("/go/l" + textBoxGoLeft.Text));
+            Thread t = new Thread(() => go("/go/l" + turningTime + "," + turningPower));
             t.Start();
 
             Image flipImage = pictureBoxDirection.Image;
@@ -343,24 +365,8 @@ namespace BuggyMapper
         }
 
         private void UserControlControls_KeyDown(object sender, KeyEventArgs e)
-        {/*
-            Console.WriteLine("key down " + e.KeyCode);
-            switch (e.KeyCode)
-            {
-                case Keys.Up:
-                    go("f");
-                    break;
-                case Keys.Down:
-                    go("s");
-                    break;
-                case Keys.Left:
-                    go("l");
-                    break;
-                case Keys.Right:
-                    go("r");
-                    break;
-            }
-            */
+        {
+
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -371,16 +377,20 @@ namespace BuggyMapper
                 switch (keyData)
                 {
                     case Keys.Up:
-                        go("/go/f500");
+                        Thread tf = new Thread(() => go("/go/f" + goingTime + "," + goingPower));
+                        tf.Start();
                         break;
                     case Keys.Down:
-                        go("/go/s");
+                        Thread tb = new Thread(() => go("/go/b" + goingTime + "," + goingPower));
+                        tb.Start();
                         break;
                     case Keys.Left:
-                        go("/go/l300");
+                        Thread tl = new Thread(() => go("/go/l" + turningTime + "," + turningPower));
+                        tl.Start();
                         break;
                     case Keys.Right:
-                        go("/go/r300");
+                        Thread tr = new Thread(() => go("/go/r" + turningTime + "," + turningPower));
+                        tr.Start();
                         break;
                 }
                 return true;
@@ -393,14 +403,53 @@ namespace BuggyMapper
 
         private void buttonGoRightSoft_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("/go/r" + textBoxGoRightSoft.Text));
+            Thread t = new Thread(() => go("/go/r" + textBoxGoRightSoft.Text + ",0.8"));
             t.Start();
         }
 
         private void buttonGoLeftSoft_Click(object sender, EventArgs e)
         {
-            Thread t = new Thread(() => go("/go/l" + textBoxGoLeftSoft.Text));
+            Thread t = new Thread(() => go("/go/l" + textBoxGoLeftSoft.Text + ",0.8"));
             t.Start();
+        }
+
+        private void trackBarPower_ValueChanged(object sender, EventArgs e)
+        {
+            goingPower = trackBarPower.Value / 10.0;
+            labelPower.Text = "Power\n\r" + goingPower;
+        }
+
+        private void trackBarTime_ValueChanged(object sender, EventArgs e)
+        {
+            goingTime = trackBarTime.Value * 100;
+            labelTime.Text = "Time\n\r" + goingTime;
+        }
+
+        private void trackBarPowerTurning_ValueChanged(object sender, EventArgs e)
+        {
+            turningPower = trackBarPowerTurning.Value / 10.0;
+            labelPowerTurning.Text = "Power\n\r" + turningPower;
+        }
+
+        private void trackBarTimeTurning_ValueChanged(object sender, EventArgs e)
+        {
+            turningTime = trackBarTimeTurning.Value * 100;
+            labelTimeTurning.Text = "Time\n\r" + turningTime;
+        }
+
+        private void mysteryButton_Click(object sender, EventArgs e)
+        {
+            go("/go/b200,1.0");
+            Thread.Sleep(210);
+            go("/go/f500,1.0");
+        }
+
+        private void buttonGoForwardAndBrake_Click(object sender, EventArgs e)
+        {
+
+            go("/go/f" + goingTime + "," + goingPower);
+            Thread.Sleep(Convert.ToInt32(goingTime));
+            go("/go/b" + goingTime/5 + "," + goingPower);
         }
     }
 }
