@@ -25,57 +25,53 @@ namespace BuggyMapper
             IEnumerable<AccessPoint> accessPoints = wifi.GetAccessPoints().OrderByDescending(ap => ap.SignalStrength);
             return accessPoints;
         }
-        public static void Connect(ListBox a)
+        public static void Connect(ListBox a,string pass)
         {
             var accessPoints = FindAP();
+           
             int selectedIndex = a.SelectedIndex;
             if (selectedIndex > accessPoints.ToArray().Length || accessPoints.ToArray().Length == 0)
             {
                 Console.Write("\r\nIndex out of bounds");
                 return;
             }
-            AccessPoint selectedAP = accessPoints.ToList()[selectedIndex]; 
-            AuthRequest authRequest = new AuthRequest(selectedAP);
-            bool overwrite = true;
+          
+                AccessPoint selectedAP = accessPoints.ToList()[selectedIndex];
+                AuthRequest authRequest = new AuthRequest(selectedAP);
+                bool overwrite = true;
 
-            if (authRequest.IsPasswordRequired)
-            {
-                if (selectedAP.HasProfile)
-                // If there already is a stored profile for the network, we can either use it or overwrite it with a new password.
+                if (authRequest.IsPasswordRequired)
                 {
-                    Console.Write("\r\nA network profile already exist, do you want to use it (y/n)? ");
-                    /*if (Console.ReadLine().ToLower() == "y")
+                    if (selectedAP.HasProfile)
+                    // If there already is a stored profile for the network, we can either use it or overwrite it with a new password.
                     {
-                        overwrite = false;
-                    }
-                     */
                     overwrite = false;
-                }
-
-                if (overwrite)
-                {
-                    if (authRequest.IsUsernameRequired)
-                    {
-                        //   Console.Write("\r\nPlease enter a username: ");
-                        //   MessageBox.Show("\r\nPlease enter a username: ");
-                        authRequest.Username = Console.ReadLine();
                     }
 
-                    authRequest.Password = PasswordPrompt(selectedAP);
-
-                    if (authRequest.IsDomainSupported)
+                    if (overwrite)
                     {
-                        // Console.Write("\r\nPlease enter a domain: ");
-          //              MessageBox.Show("\r\nPlease enter a domain: ");
-                        authRequest.Domain = Console.ReadLine();
+                        /*   if (authRequest.IsUsernameRequired)
+                           {
+                               //   Console.Write("\r\nPlease enter a username: ");
+                               //   MessageBox.Show("\r\nPlease enter a username: ");
+                               authRequest.Username = Console.ReadLine();
+                           }*/
+
+                        authRequest.Password = PasswordPrompt(selectedAP, pass);
+
+                        /*   if (authRequest.IsDomainSupported)
+                           {
+                               // Console.Write("\r\nPlease enter a domain: ");
+                 //              MessageBox.Show("\r\nPlease enter a domain: ");
+                               authRequest.Domain = Console.ReadLine();
+                           }*/
                     }
                 }
-            }
-
-            selectedAP.ConnectAsync(authRequest, overwrite, OnConnectedComplete);
+                selectedAP.ConnectAsync(authRequest, overwrite, OnConnectedComplete);
+     
         }
 
-        private static string PasswordPrompt(AccessPoint selectedAP)
+        private static string PasswordPrompt(AccessPoint selectedAP,string pass)
         {
             string password = string.Empty;
 
@@ -85,13 +81,16 @@ namespace BuggyMapper
             {
                 // Console.Write("\r\nPlease enter the wifi password: ");
             //    MessageBox.Show("\r\nPlease enter wifi password: ");
-                password = Console.ReadLine();
+                password = pass;
 
                 validPassFormat = selectedAP.IsValidPassword(password);
 
                 if (!validPassFormat)
-              //      MessageBox.Show("\r\nPassword is not valid for this network type.");
-                   Console.WriteLine("\r\nPassword is not valid for this network type.");
+                {
+                    MessageBox.Show("Lozinka nije tacna!");
+                    break;
+                }
+              //     Console.WriteLine("\r\nPassword is not valid for this network type.");
             }
 
             return password;

@@ -24,12 +24,14 @@ namespace BuggyMapper
 
         public UserControlConnect()
         {
-            arrAP = ClassWifi.FindAP();
+          //  arrAP = ClassWifi.FindAP();
             InitializeComponent();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+            arrAP = ClassWifi.FindAP();
             foreach (var el in arrAP)
                 listBox1.Items.Add(el.Name + "   " + el.SignalStrength + "db " + el.IsConnected);
         }
@@ -37,13 +39,22 @@ namespace BuggyMapper
         private void btnConnect_Click(object sender, EventArgs e)
         {
             nodemcuIP = "http://192.168.4.1";
-
-            ClassWifi.Connect(listBox1);
-            System.Threading.Thread.Sleep(5000);
-            listBox1.Items.Clear();
-            foreach (var a in arrAP)
-                listBox1.Items.Add(a.Name + " / " + a.SignalStrength + " / " + a.IsConnected);
+            string password = tbxPassword.Text;
+            if (listBox1.SelectedIndex!=-1)
+            {
+                ClassWifi.Connect(listBox1, password);
+                //System.Threading.Thread.Sleep(5000); // ZBOG OVO TI BAGUJE PROGRAM!
+                listBox1.Items.Clear();
+                if (arrAP != null)
+                {
+                    foreach (var a in arrAP)
+                        listBox1.Items.Add(a.Name + "   " + a.SignalStrength + "db " + a.IsConnected);
+                }
+            }
+            else
+                MessageBox.Show("Polje je prazno ");
         }
+
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
@@ -52,7 +63,6 @@ namespace BuggyMapper
                 ClassWifi.Disconnect();
 
                 btnConnectToWiFi.Enabled = true;
-                btnDisconnect.Enabled = false;
             }
         }
 
