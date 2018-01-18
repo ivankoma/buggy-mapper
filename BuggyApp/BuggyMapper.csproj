@@ -90,6 +90,12 @@
     <Compile Include="UserControls\UserControlInfo.Designer.cs">
       <DependentUpon>UserControlInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UserControlPathfinding.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UserControlPathfinding.Designer.cs">
+      <DependentUpon>UserControlPathfinding.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UserControlInfo.resx">
       <DependentUpon>UserControlInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UserControlPathfinding.resx">
+      <DependentUpon>UserControlPathfinding.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

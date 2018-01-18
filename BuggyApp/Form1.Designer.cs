@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPathfinding = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnControls = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.userControlConnect1 = new BuggyMapper.UserControlConnect();
             this.userControlControls1 = new BuggyMapper.UserControlControls();
             this.userControlInfo1 = new BuggyMapper.UserControlInfo();
+            this.userControlPathfinding1 = new BuggyApp.UserControls.UserControlPathfinding();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +52,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
+            this.panel1.Controls.Add(this.btnPathfinding);
             this.panel1.Controls.Add(this.SidePanel);
             this.panel1.Controls.Add(this.btnInfo);
             this.panel1.Controls.Add(this.btnControls);
@@ -60,6 +63,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(210, 580);
             this.panel1.TabIndex = 0;
+            // 
+            // btnPathfinding
+            // 
+            this.btnPathfinding.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(39)))), ((int)(((byte)(40)))));
+            this.btnPathfinding.FlatAppearance.BorderSize = 0;
+            this.btnPathfinding.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPathfinding.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPathfinding.ForeColor = System.Drawing.Color.White;
+            this.btnPathfinding.Image = global::BuggyApp.Properties.Resources.zoom_icon_24;
+            this.btnPathfinding.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPathfinding.Location = new System.Drawing.Point(12, 395);
+            this.btnPathfinding.Name = "btnPathfinding";
+            this.btnPathfinding.Size = new System.Drawing.Size(195, 56);
+            this.btnPathfinding.TabIndex = 6;
+            this.btnPathfinding.Text = "Pathfinding";
+            this.btnPathfinding.UseVisualStyleBackColor = false;
+            this.btnPathfinding.Click += new System.EventHandler(this.btnPathfinding_Click);
             // 
             // SidePanel
             // 
@@ -209,11 +229,19 @@
             this.userControlInfo1.Size = new System.Drawing.Size(810, 554);
             this.userControlInfo1.TabIndex = 8;
             // 
+            // userControlPathfinding1
+            // 
+            this.userControlPathfinding1.Location = new System.Drawing.Point(210, 26);
+            this.userControlPathfinding1.Name = "userControlPathfinding1";
+            this.userControlPathfinding1.Size = new System.Drawing.Size(810, 554);
+            this.userControlPathfinding1.TabIndex = 12;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 580);
+            this.Controls.Add(this.userControlPathfinding1);
             this.Controls.Add(this.userControlHome1);
             this.Controls.Add(this.userControlConnect1);
             this.Controls.Add(this.userControlControls1);
@@ -248,6 +276,8 @@
         private UserControlControls userControlControls1;
         private UserControlConnect userControlConnect1;
         private UserControlHome userControlHome1;
+        private System.Windows.Forms.Button btnPathfinding;
+        private BuggyApp.UserControls.UserControlPathfinding userControlPathfinding1;
     }
 }
 
