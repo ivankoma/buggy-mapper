@@ -32,3 +32,4 @@ C:\Users\josanac\Desktop\buggy-mapper-master\BuggyApp\obj\Debug\BuggyApp.pdb
 C:\Users\josanac\Desktop\buggy-mapper-master\BuggyApp\bin\Debug\BuggyApp.exe.config
 C:\Users\josanac\Desktop\buggy-mapper-master\BuggyApp\bin\Debug\BuggyApp.exe
 C:\Users\josanac\Desktop\buggy-mapper-master\BuggyApp\bin\Debug\BuggyApp.pdb
+C:\Users\k\Documents\GitHub\buggy-mapper\BuggyApp\obj\Debug\BuggyApp.UserControls.UserControlPathfinding.resources

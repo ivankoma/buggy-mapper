@@ -34,16 +34,34 @@ namespace BuggyApp.Class
         {
             Size newSize = new Size(bitmap.Size.Width * upscaleFactor, bitmap.Size.Height * upscaleFactor);
 
-            if (pb.Image != null)
+            if (pb.InvokeRequired)
             {
-                pb.Image.Dispose();
+                pb.BeginInvoke((MethodInvoker)delegate () {
+                    if (pb.Image != null)
+                    {
+                        pb.Image.Dispose();
+                    }
+                    else
+                    {
+                        pb.Size = newSize;
+                    }
+
+                    pb.Image = graphicalOperations.ResizeImage(bitmap, newSize);
+                });
             }
             else
             {
-                pb.Size = newSize;
-            }
+                if (pb.Image != null)
+                {
+                    pb.Image.Dispose();
+                }
+                else
+                {
+                    pb.Size = newSize;
+                }
 
-            pb.Image = graphicalOperations.ResizeImage(bitmap, newSize);
+                pb.Image = graphicalOperations.ResizeImage(bitmap, newSize);
+            }
         }
 
     }
